@@ -29,6 +29,7 @@ class _UserChatState extends State<UserChat> {
       "senderby": auth!.uid,
       "timee": "${DateTime.now().hour} : ${DateTime.now().minute}",
     });
+    controller.clear();
     // message.insert(
     //     0,
     //     Messsage1(
@@ -105,7 +106,8 @@ class _UserChatState extends State<UserChat> {
                                             color: isMe
                                                 ? const Color.fromARGB(
                                                     255, 183, 255, 0)
-                                                : Colors.blue,
+                                                : const Color.fromARGB(
+                                                    255, 31, 240, 248),
                                             borderRadius:
                                                 BorderRadius.circular(10)),
                                         child: Text(data["text"]),
@@ -155,12 +157,12 @@ class _UserChatState extends State<UserChat> {
   }
 }
 
-class Messsage1 {
-  String? text;
-  bool? IsSentByMe;
-  String? timee;
-  Messsage1({this.IsSentByMe, this.text, this.timee});
-}
+// class Messsage1 {
+//   String? text;
+//   bool? IsSentByMe;
+//   String? timee;
+//   Messsage1({this.IsSentByMe, this.text, this.timee});
+// }
 //  ListView.builder(
 //               itemCount: message.length,
 //               itemBuilder: (context, index) {
