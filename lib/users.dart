@@ -24,8 +24,8 @@ class _UserScreenState extends State<UserScreen> {
   }
 
   void chatroom(String name, String id) async {
-    print("My id:${auth!.uid}");
-    print("other id:$id");
+    // print("My id:${auth!.uid}");
+    // print("other id:$id");
     String chatRoomId = getChatroomId(auth!.uid, id);
 
     await FirebaseFirestore.instance
@@ -82,10 +82,7 @@ class _UserScreenState extends State<UserScreen> {
                     onTap: () {
                       chatroom(data["name"], data["id"]);
                     },
-                    leading: const CircleAvatar(
-                      backgroundImage: NetworkImage(
-                          'https://www.google.com/url?sa=i&url=https%3A%2F%2Fin.pinterest.com%2Fpin%2Fpinterest--748793875553180511%2F&psig=AOvVaw2Y6uEzEvEi4Kk1enWeyTZF&ust=1694581092320000&source=images&cd=vfe&opi=89978449&ved=0CBAQjRxqFwoTCJiDutOkpIEDFQAAAAAdAAAAABAJ'),
-                    ),
+                    leading: const CircleAvatar(),
                     title: Text(snapshot.data!.docs[index]["name"].toString()),
                     trailing:
                         Text(snapshot.data!.docs[index]["email"].toString()),
