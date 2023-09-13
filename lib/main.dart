@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_chat/signup/signup.dart';
 import 'package:flutter_chat/signup/signupViewModel.dart';
-import 'package:flutter_chat/usera2.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:provider/provider.dart';
@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
                         ColorScheme.fromSeed(seedColor: Colors.deepPurple),
                     useMaterial3: true,
                   ),
-                  home: const Users2(),
+                  home: const SignUpScreen(),
                 )));
   }
 }
