@@ -23,7 +23,7 @@ class _TestScreenState extends State<TestScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Test'),
+          title: const Text('Test'),
           backgroundColor: Colors.deepPurpleAccent.shade200,
         ),
         body: Column(
@@ -36,7 +36,7 @@ class _TestScreenState extends State<TestScreen> {
             sp.setBool('isLogin', false);
             setState(() {});
           },
-          child: Icon(Icons.ac_unit_sharp),
+          child: const Icon(Icons.ac_unit_sharp),
         ),
       ),
     );
