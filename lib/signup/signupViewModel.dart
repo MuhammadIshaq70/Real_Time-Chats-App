@@ -10,14 +10,14 @@ import '../widget/Utils.dart';
 
 class SignUpViewModel extends ChangeNotifier {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  TextEditingController firstnameController = TextEditingController();
-  TextEditingController lastnameController = TextEditingController();
+
   TextEditingController usernameController = TextEditingController();
   TextEditingController emailnameController = TextEditingController();
   TextEditingController passwordnameController = TextEditingController();
+  TextEditingController numberController = TextEditingController();
   final _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  Creataccount() {
+  Creataccount(String imageurl) {
     _auth
         .createUserWithEmailAndPassword(
           email: emailnameController.text,
@@ -30,9 +30,11 @@ class SignUpViewModel extends ChangeNotifier {
           .collection("users")
           .doc(_auth.currentUser!.uid)
           .set({
-        "name": firstnameController.text.trim().toString(),
+        "name": usernameController.text.trim().toString(),
+        'phone': numberController.text.toString(),
         "id": _auth.currentUser!.uid,
-        "email": emailnameController.text.trim().toString()
+        "email": emailnameController.text.trim().toString(),
+        'imageUrl': imageurl
       });
       Get.to(() => const UserScreen());
     }).onError((error, stackTrace) {

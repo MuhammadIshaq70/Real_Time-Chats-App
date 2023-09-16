@@ -27,7 +27,10 @@ class _TestScreenState extends State<TestScreen> {
           backgroundColor: Colors.deepPurpleAccent.shade200,
         ),
         body: Column(
-          children: [const Text('heelo dear '), Text(age.toString())],
+          children: [
+            //const Text('heelo dear '),
+            Text(age.toString()),
+          ],
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
@@ -46,5 +49,9 @@ class _TestScreenState extends State<TestScreen> {
     SharedPreferences sp = await SharedPreferences.getInstance();
     age = sp.getInt('age') ?? 0;
     isLogin = sp.getBool('isLogin') ?? false;
+
+    Future.delayed(const Duration(seconds: 3), () {
+      //  Navigator.push(context, MaterialPageRoute(builder: (context)=>isLogin?HomeScre():Login));
+    });
   }
 }

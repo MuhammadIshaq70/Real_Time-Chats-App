@@ -1,6 +1,10 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat/signup/signupViewModel.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 import '../login/login.dart';
@@ -16,6 +20,31 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  XFile? _pickedImage;
+  String? imageUrl;
+
+  Future<void> _pickImage() async {
+    final ImagePicker picker = ImagePicker();
+    _pickedImage = await picker.pickImage(source: ImageSource.camera);
+    setState(() {});
+    uploadImageToFirebaseStorage(_pickedImage!.path);
+  }
+
+  //Image push in firebase
+
+  Future<String> uploadImageToFirebaseStorage(String imagePath) async {
+    Reference storageReference = FirebaseStorage.instance
+        .ref()
+        .child("image/${DateTime.now().millisecondsSinceEpoch}");
+
+    UploadTask uploadTask = storageReference.putFile(File(imagePath));
+
+    await uploadTask.whenComplete(() => print('Image uploaded'));
+
+    imageUrl = await storageReference.getDownloadURL();
+    return imageUrl.toString();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -24,7 +53,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           appBar: AppBar(
             backgroundColor: zappbarcolor,
             title: const Center(
-              child: Text('Login',
+              child: Text('SignUp',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
             ),
           ),
@@ -88,63 +117,34 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     SizedBox(
                       height: 16.sp,
                     ),
-                    Row(
-                      children: [
-                        SizedBox(
-                          height: 40.sp,
-                          width: 180.sp,
-                          child: TextFormField(
-                              controller: Model.firstnameController,
-                              decoration: const InputDecoration(
-                                  hintText: 'First Name',
-                                  hintStyle: TextStyle(color: Colors.grey)),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Enter First Name';
-                                } else {
-                                  return null;
-                                }
-                              }),
+                    Padding(
+                      padding: EdgeInsets.only(left: 90.sp),
+                      child: InkWell(
+                        onTap: _pickImage,
+                        child: Container(
+                          height: 150.sp,
+                          width: 150.sp,
+                          decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 195, 183, 183),
+                              borderRadius: BorderRadius.circular(100)),
+                          child: _pickedImage != null
+                              ? CircleAvatar(
+                                  radius: 75,
+                                  backgroundImage:
+                                      FileImage(File(_pickedImage!.path)),
+                                )
+                              : const Icon(
+                                  Icons.person,
+                                  size: 80,
+                                ),
                         ),
-                        SizedBox(
-                          width: 9.sp,
-                        ),
-                        SizedBox(
-                          height: 40.sp,
-                          width: 160.sp,
-                          child: TextFormField(
-                              controller: Model.lastnameController,
-                              decoration: const InputDecoration(
-                                  hintText: 'Last Name',
-                                  hintStyle: TextStyle(color: Colors.grey)),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Enter Last Name';
-                                } else {
-                                  return null;
-                                }
-                              }),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 13.sp,
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          'Show full name on profile',
-                          style: TextStyle(
-                              //fontWeight: FontWeight.bold,
-                              fontSize: 13.sp,
-                              color: Colors.grey),
-                        ),
-                      ],
+                      ),
                     ),
                     SizedBox(
                       height: 16.sp,
                     ),
                     TextFormField(
+                        controller: Model.usernameController,
                         decoration: const InputDecoration(
                             hintStyle: TextStyle(color: Colors.grey),
                             hintText: 'User Name',
@@ -152,6 +152,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Enter User Name';
+                          } else {
+                            return null;
+                          }
+                        }),
+                    SizedBox(
+                      height: 16.sp,
+                    ),
+                    TextFormField(
+                        controller: Model.numberController,
+                        keyboardType: TextInputType.phone,
+                        decoration: const InputDecoration(
+                          hintStyle: TextStyle(color: Colors.grey),
+                          hintText: 'Phone Num',
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Enter Phone Number';
                           } else {
                             return null;
                           }
@@ -197,7 +214,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     InkWell(
                       onTap: () {
                         if (Model.formKey.currentState!.validate()) {
-                          Model.Creataccount();
+                          Model.Creataccount(imageUrl.toString());
                         }
                       },
                       child: Row(
@@ -230,18 +247,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(
-                      height: 16.sp,
-                    ),
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'By signing up for a medical Dictionary  Community account , you \nare agreeing to our Terms of Service and Privacy Policy .',
-                          style: TextStyle(color: Colors.grey, fontSize: 10),
-                        ),
-                      ],
-                    )
                   ],
                 ),
               ),

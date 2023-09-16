@@ -23,7 +23,7 @@ class _UserScreenState extends State<UserScreen> {
     }
   }
 
-  void chatroom(String name, String id) async {
+  void chatroom(String name, String id, var phone, var image1) async {
     // print("My id:${auth!.uid}");
     // print("other id:$id");
     String chatRoomId = getChatroomId(auth!.uid, id);
@@ -36,6 +36,9 @@ class _UserScreenState extends State<UserScreen> {
       if (value.exists) {
         Get.to(UserChat(
           chatId: chatRoomId,
+          name: name,
+          Phone: phone,
+          image: image1,
         ));
         print("Alread exist");
       } else {
@@ -52,6 +55,9 @@ class _UserScreenState extends State<UserScreen> {
         });
         Get.to(UserChat(
           chatId: chatRoomId,
+          name: name,
+          Phone: phone,
+          image: image1,
         ));
       }
     });
@@ -80,9 +86,13 @@ class _UserScreenState extends State<UserScreen> {
                   final data = snapshot.data!.docs[index];
                   return ListTile(
                     onTap: () {
-                      chatroom(data["name"], data["id"]);
+                      chatroom(data["name"], data["id"], data["phone"],
+                          data['imageUrl']);
                     },
-                    leading: const CircleAvatar(),
+                    leading: CircleAvatar(
+                      backgroundImage: NetworkImage(
+                          snapshot.data!.docs[index]["imageUrl"].toString()),
+                    ),
                     title: Text(snapshot.data!.docs[index]["name"].toString()),
                     trailing:
                         Text(snapshot.data!.docs[index]["email"].toString()),

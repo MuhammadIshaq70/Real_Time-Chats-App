@@ -1,10 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class UserChat extends StatefulWidget {
   String chatId;
-  UserChat({super.key, required this.chatId});
+  String? name;
+  var Phone;
+  var image;
+  UserChat(
+      {super.key,
+      required this.chatId,
+      required this.name,
+      required this.Phone,
+      required this.image});
 
   //final Map<String, dynamic>? userMap;
 
@@ -46,16 +55,27 @@ class _UserChatState extends State<UserChat> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: const Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          title: Row(
             children: [
-              Text(
-                'Joy',
-                style: TextStyle(fontSize: 18),
+              CircleAvatar(
+                backgroundImage: NetworkImage(widget.image.toString()),
+                radius: 20,
+                backgroundColor: Colors.cyanAccent.shade200,
               ),
-              Text(
-                '03367070421',
-                style: TextStyle(fontSize: 18),
+              SizedBox(
+                width: 9.sp,
+              ),
+              Column(
+                children: [
+                  Text(
+                    widget.name.toString(),
+                    style: const TextStyle(fontSize: 18),
+                  ),
+                  Text(
+                    widget.Phone,
+                    style: const TextStyle(fontSize: 18),
+                  ),
+                ],
               ),
             ],
           ),
