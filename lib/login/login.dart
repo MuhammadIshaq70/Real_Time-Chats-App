@@ -88,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     TextFormField(
                       keyboardType: TextInputType.emailAddress,
                       controller: Model.emailController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           hintStyle: TextStyle(color: Colors.grey),
                           hintText: 'Email'),
                       validator: (v) {
@@ -150,7 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         InkWell(
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => SignUpScreen()));
+                                builder: (context) => const SignUpScreen()));
                           },
                           child: const Text(
                             ' Create an Account',
@@ -158,6 +158,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 fontSize: 16, fontWeight: FontWeight.bold),
                           ),
                         ),
+                        const Text('please first  create an account ')
                       ],
                     )
                   ],
