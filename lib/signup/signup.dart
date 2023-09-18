@@ -247,6 +247,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ],
                     ),
+                    const Text('please Login ')
                   ],
                 ),
               ),
