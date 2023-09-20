@@ -176,6 +176,7 @@ class _UserChatState extends State<UserChat> {
         ));
   }
 }
+
 //Text('hello'),
 
 // class Messsage1 {
