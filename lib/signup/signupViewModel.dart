@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat/users.dart';
 import 'package:get/get.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 //import '../login/login.dart';
 import '../widget/Utils.dart';
@@ -16,8 +17,18 @@ class SignUpViewModel extends ChangeNotifier {
   TextEditingController passwordnameController = TextEditingController();
   TextEditingController numberController = TextEditingController();
   final _auth = FirebaseAuth.instance;
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  String? tok;
+  void gettoken() async {
+    messaging.getToken().then((value) {
+      tok = value.toString();
+    });
+  }
+
   Creataccount(String imageurl) {
+    print("token is : $tok");
     _auth
         .createUserWithEmailAndPassword(
           email: emailnameController.text,

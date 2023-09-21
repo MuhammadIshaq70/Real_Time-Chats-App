@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:get/get.dart';
 
 import 'ChatRoom/userChat.dart';
+import 'Services/Notification_Services.dart';
 
 class UserScreen extends StatefulWidget {
   const UserScreen({super.key});
@@ -13,6 +16,12 @@ class UserScreen extends StatefulWidget {
 }
 
 class _UserScreenState extends State<UserScreen> {
+  @override
+  void initState() {
+    SendNotifiation.calling(context);
+    super.initState();
+  }
+
   final auth = FirebaseAuth.instance.currentUser;
 
   getChatroomId(String id1, String id2) {

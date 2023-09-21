@@ -118,7 +118,7 @@ class _UserChatState extends State<UserChat> {
                                   Column(
                                     children: [
                                       Container(
-                                        margin: const EdgeInsets.all(10),
+                                         margin: const EdgeInsets.all(10),
                                         padding: const EdgeInsets.all(10),
                                         constraints: const BoxConstraints(
                                             minHeight: 20, maxWidth: 200),
