@@ -21,14 +21,11 @@ class SignUpViewModel extends ChangeNotifier {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   String? tok;
-  void gettoken() async {
-    messaging.getToken().then((value) {
+
+  Creataccount(String imageurl) async {
+    await messaging.getToken().then((value) {
       tok = value.toString();
     });
-  }
-
-  Creataccount(String imageurl) {
-    print("token is : $tok");
     _auth
         .createUserWithEmailAndPassword(
           email: emailnameController.text,
@@ -45,7 +42,8 @@ class SignUpViewModel extends ChangeNotifier {
         'phone': numberController.text.toString(),
         "id": _auth.currentUser!.uid,
         "email": emailnameController.text.trim().toString(),
-        'imageUrl': imageurl
+        'imageUrl': imageurl,
+        "token": tok.toString(),
       });
       Get.to(() => const UserScreen());
     }).onError((error, stackTrace) {

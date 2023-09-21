@@ -32,7 +32,8 @@ class _UserScreenState extends State<UserScreen> {
     }
   }
 
-  void chatroom(String name, String id, var phone, var image1) async {
+  void chatroom(
+      String name, String id, var phone, var image1, var Token) async {
     // print("My id:${auth!.uid}");
     // print("other id:$id");
     String chatRoomId = getChatroomId(auth!.uid, id);
@@ -67,6 +68,7 @@ class _UserScreenState extends State<UserScreen> {
           name: name,
           Phone: phone,
           image: image1,
+          Token: Token,
         ));
       }
     });
@@ -96,7 +98,7 @@ class _UserScreenState extends State<UserScreen> {
                   return ListTile(
                     onTap: () {
                       chatroom(data["name"], data["id"], data["phone"],
-                          data['imageUrl']);
+                          data['imageUrl'], data['token']);
                     },
                     leading: CircleAvatar(
                       backgroundImage: NetworkImage(

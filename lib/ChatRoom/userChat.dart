@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_chat/Services/Notification_Services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class UserChat extends StatefulWidget {
@@ -8,12 +9,14 @@ class UserChat extends StatefulWidget {
   String? name;
   var Phone;
   var image;
+  var Token;
   UserChat(
       {super.key,
       required this.chatId,
       required this.name,
       required this.Phone,
-      required this.image});
+      required this.image,
+      this.Token});
 
   //final Map<String, dynamic>? userMap;
 
@@ -118,7 +121,7 @@ class _UserChatState extends State<UserChat> {
                                   Column(
                                     children: [
                                       Container(
-                                         margin: const EdgeInsets.all(10),
+                                        margin: const EdgeInsets.all(10),
                                         padding: const EdgeInsets.all(10),
                                         constraints: const BoxConstraints(
                                             minHeight: 20, maxWidth: 200),
@@ -162,6 +165,10 @@ class _UserChatState extends State<UserChat> {
                             onPressed: () {
                               if (controller.text.isNotEmpty) {
                                 addMessage();
+                                SendNotifiation.sendPushNotification(
+                                    widget.Token,
+                                    widget.name.toString(),
+                                    controller.toString());
                               }
                             },
                             icon: const Icon(Icons.send)),
