@@ -168,7 +168,7 @@ class _UserChatState extends State<UserChat> {
                                 SendNotifiation.sendPushNotification(
                                     widget.Token,
                                     widget.name.toString(),
-                                    controller.toString());
+                                    controller.text.toString());
                               }
                             },
                             icon: const Icon(Icons.send)),
