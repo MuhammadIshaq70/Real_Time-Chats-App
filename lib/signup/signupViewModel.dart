@@ -27,7 +27,7 @@ class SignUpViewModel extends ChangeNotifier {
       tok = value.toString();
     });
     _auth
-        .createUserWithEmailAndPassword(
+        .createUserWithEmailAndPassword( 
           email: emailnameController.text,
           password: passwordnameController.text,
         )
